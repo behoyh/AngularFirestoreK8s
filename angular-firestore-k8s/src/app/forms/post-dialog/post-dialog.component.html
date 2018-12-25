@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Post {{data.id}}</h1>
+
+<div mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input [(ngModel)]="data.name" matInput placeholder="Placeholder">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Body</mat-label>
+    <input [(ngModel)]="data.body" matInput placeholder="Placeholder">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Date</mat-label>
+    <input [(ngModel)]="data.date" matInput placeholder="Placeholder">
+  </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+  </div>
+</div>
