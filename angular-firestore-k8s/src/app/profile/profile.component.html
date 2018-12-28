@@ -1,3 +1,55 @@
-<p>
-  profile works!
-</p>
+<mat-tab-group>
+  <mat-tab label="Info">
+    <div class="profile-picture mat-elevation-z1" matRipple></div>
+    <mat-form-field>
+      <input matInput placeholder="Username" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Primary Email" />
+    </mat-form-field>
+  </mat-tab>
+  <mat-tab label="Link Google Account">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="GoogleAuthForm">
+        <form [formGroup]="GoogleAuthForm">
+          <ng-template matStepLabel>Fill out your name</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Last name, First name" formControlName="username" required>
+          </mat-form-field>
+          <button mat-button (click)="login()">Login</button>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="GoogleAuthForm">
+        <form [formGroup]="GoogleAuthForm">
+          <ng-template matStepLabel>Fill out your address</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="password" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-tab>
+  <mat-tab label="Change Password">
+    <mat-form-field>
+      <input matInput placeholder="Current Password" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="New Password" />
+    </mat-form-field>
+  </mat-tab>
+</mat-tab-group>
