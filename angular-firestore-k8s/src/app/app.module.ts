@@ -7,14 +7,21 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule, MatIconModule} from '@angular/material';
 import { FormsModule }   from '@angular/forms';
 import { PostDialogComponent } from './forms/post-dialog/post-dialog.component';
+import { ProfileComponent } from './profile/profile.component';
+import { RouterModule } from '@angular/router';
+import { AppRouterModule } from './app.router.module';
+import { APP_BASE_HREF } from '@angular/common';
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostDialogComponent
+    PostDialogComponent,
+    ProfileComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,11 +39,14 @@ import { PostDialogComponent } from './forms/post-dialog/post-dialog.component';
     MatSnackBarModule,
     MatGridListModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule,
+    AppRouterModule,
+    RouterModule
   ],
   entryComponents: [PostDialogComponent],
-  exports: [MatButtonModule, MatCheckboxModule,MatFormFieldModule,MatInputModule,MatSnackBarModule,MatDialogModule,MatGridListModule,MatToolbarModule,MatCardModule],
-  providers: [],
+  exports: [MatButtonModule, MatCheckboxModule,MatFormFieldModule,MatInputModule,MatSnackBarModule,MatDialogModule,MatGridListModule,MatToolbarModule,MatCardModule,MatIconModule],
+  providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

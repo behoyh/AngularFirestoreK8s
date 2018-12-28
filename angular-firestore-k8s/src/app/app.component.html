@@ -1,19 +1,7 @@
 <mat-toolbar>
-  <span>Posts</span>
+  <span><a mat-button href="/posts"><h1>Posts</h1></a></span>
   <span class="spacer"></span>
-  <button mat-raised-button (click)="PostDialog()">Create Post</button>
+  <button mat-mini-fab color="accent" (click)="Profile()"><mat-icon>account_circle</mat-icon></button>
 </mat-toolbar>
 
-<mat-grid-list cols="3" rowHeight="2:1">
-  <mat-grid-tile *ngFor="let item of items | async">
-    <mat-card>
-      <mat-card-title>{{item.name}}</mat-card-title>
-      <mat-card-content>
-        {{item.body}}
-      </mat-card-content>
-      <mat-card-footer><small>{{item.date}}</small></mat-card-footer>
-      <button mat-button (click)="PostDialog(item)">edit</button>
-      <button mat-button (click)="DeletePost(item.id)">delete</button>
-    </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+<router-outlet></router-outlet>
