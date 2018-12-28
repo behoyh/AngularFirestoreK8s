@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { initChangeDetectorIfExisting } from '@angular/core/src/render3/instructions';
 import { PostDialogComponent } from './forms/post-dialog/post-dialog.component';
 
 @Component({
@@ -74,8 +73,8 @@ export class AppComponent {
       width: '300px',
       data: {
         id: item.id,
-        body: item.name,
-        name: item.body,
+        body: item.body,
+        name: item.name,
         date: item.date
       }
     });

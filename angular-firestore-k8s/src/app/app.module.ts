@@ -7,7 +7,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule} from '@angular/material';
 import { FormsModule }   from '@angular/forms';
 import { PostDialogComponent } from './forms/post-dialog/post-dialog.component';
 
@@ -29,10 +29,13 @@ import { PostDialogComponent } from './forms/post-dialog/post-dialog.component';
     MatInputModule,
     FormsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatCardModule
   ],
   entryComponents: [PostDialogComponent],
-  exports: [MatButtonModule, MatCheckboxModule,MatFormFieldModule,MatInputModule,MatSnackBarModule,MatDialogModule],
+  exports: [MatButtonModule, MatCheckboxModule,MatFormFieldModule,MatInputModule,MatSnackBarModule,MatDialogModule,MatGridListModule,MatToolbarModule,MatCardModule],
   providers: [],
   bootstrap: [AppComponent]
 })
