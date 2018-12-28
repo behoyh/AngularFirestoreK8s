@@ -5,7 +5,7 @@ import { DialogData } from './post-dialog-data';
 @Component({
   selector: 'app-post-dialog',
   templateUrl: './post-dialog.component.html',
-  styleUrls: ['./post-dialog.component.css']
+  styleUrls: ['./post-dialog.component.scss']
 })
 export class PostDialogComponent implements OnInit {
 
