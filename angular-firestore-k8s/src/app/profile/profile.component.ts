@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
+import { auth} from 'firebase';
+import { ProfileService } from './profile.service';
+import { MatSnackBar } from '@angular/material';
+
 
 @Component({
   selector: 'app-profile',
@@ -9,15 +12,37 @@ import { auth } from 'firebase';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
-  constructor(public afAuth: AngularFireAuth) {
+  user:auth.UserCredential = {credential:null,user:null};
+  profilePicture:string;
+  constructor(public profileService: ProfileService, public snackBar: MatSnackBar) {
   }
   login() {
-    var result = this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-    debugger;
+    this.profileService.SignIn()
+      .then(x=>this.setUser(x));
+  }
+
+  setUser(user: any): any {
+    this.user = user;
+    this.profilePicture = user.additionalUserInfo.profile.picture
   }
   logout() {
-    this.afAuth.auth.signOut();
+    this.profileService.SignOut();
+    this.user = null;
+  }
+
+  public StepChanged(event:any)
+  {
+    let user = this.user;
+    debugger;
+    if (user && user.user.uid && event.selectedIndex == 2)
+    {
+      this.profileService.CreateUser(user.additionalUserInfo)
+      .then(x=> this.snackBar.open("Added User!","OKAY", {duration:3000}))
+      .catch(x=>this.onError(x))
+    }
+
+
+    debugger;
   }
 
   GoogleAuthForm = new FormGroup(
@@ -27,6 +52,11 @@ export class ProfileComponent implements OnInit {
     });
 
   ngOnInit() {
+  }
+
+  private onError(error)
+  {
+    alert(error);
   }
 
 }

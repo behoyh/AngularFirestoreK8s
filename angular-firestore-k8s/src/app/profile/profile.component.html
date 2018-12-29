@@ -1,6 +1,6 @@
 <mat-tab-group>
   <mat-tab label="Info">
-    <div class="profile-picture mat-elevation-z1" matRipple></div>
+    <div class="profile-picture mat-elevation-z1" matRipple><img [src]="profilePicture"></div>
     <mat-form-field>
       <input matInput placeholder="Username" />
     </mat-form-field>
@@ -9,7 +9,7 @@
     </mat-form-field>
   </mat-tab>
   <mat-tab label="Link Google Account">
-    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-horizontal-stepper [linear]="isLinear" #stepper (selectionChange)="StepChanged($event)">
       <mat-step [stepControl]="GoogleAuthForm">
         <form [formGroup]="GoogleAuthForm">
           <ng-template matStepLabel>Fill out your name</ng-template>
@@ -24,10 +24,8 @@
       </mat-step>
       <mat-step [stepControl]="GoogleAuthForm">
         <form [formGroup]="GoogleAuthForm">
-          <ng-template matStepLabel>Fill out your address</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Address" formControlName="password" required>
-          </mat-form-field>
+          <ng-template matStepLabel>Confirm Account</ng-template>
+            <h5>{{user | json}}</h5>
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
