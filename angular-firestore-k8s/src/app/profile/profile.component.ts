@@ -33,10 +33,10 @@ export class ProfileComponent implements OnInit {
   public StepChanged(event:any)
   {
     let user = this.user;
-    debugger;
+
     if (user && user.user.uid && event.selectedIndex == 2)
     {
-      this.profileService.CreateUser(user.additionalUserInfo)
+      this.profileService.CreateUser(user.additionalUserInfo,this.GoogleAuthForm.controls.confirmPassword.value)
       .then(x=> this.snackBar.open("Added User!","OKAY", {duration:3000}))
       .catch(x=>this.onError(x))
     }
@@ -48,7 +48,8 @@ export class ProfileComponent implements OnInit {
   GoogleAuthForm = new FormGroup(
     {
       username: new FormControl,
-      password: new FormControl
+      password: new FormControl,
+      confirmPassword: new FormControl
     });
 
   ngOnInit() {

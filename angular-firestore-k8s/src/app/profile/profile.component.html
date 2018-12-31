@@ -25,7 +25,12 @@
       <mat-step [stepControl]="GoogleAuthForm">
         <form [formGroup]="GoogleAuthForm">
           <ng-template matStepLabel>Confirm Account</ng-template>
-            <h5>{{user | json}}</h5>
+          <h5>{{user | json}}</h5>
+          <mat-form-field>
+            <input matInput placeholder="Password" formControlName="password" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Confirm Password" formControlName="confirmPassword" required></mat-form-field>
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
