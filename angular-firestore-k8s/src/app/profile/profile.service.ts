@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { auth} from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ProfileModel } from './profile.model';
-import { sha512 } from '../../../node_modules/hash.js/lib/hash/sha/512';
+import * as sha from 'js-sha512';
 
 
 @Injectable({
@@ -27,13 +27,14 @@ export class ProfileService {
 
   public CreateUser(user:any, password:string)
   {
+    debugger;
     var data: ProfileModel = 
     {
       uid: user.profile.id,
       name: user.profile.name,
       email: user.profile.email,
       picture: user.profile.picture,
-      password: sha512().update(password).digest('hex')
+      password: sha.sha512(password)
     };
 
     var postsRef = this.db.collection("users");
