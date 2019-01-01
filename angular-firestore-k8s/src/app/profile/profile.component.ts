@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.SignIn()
       .then(x=>this.setUser(x));
   }
-
+                          
   setUser(user: any): any {
     this.user = user;
     this.profilePicture = user.additionalUserInfo.profile.picture

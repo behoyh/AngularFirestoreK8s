@@ -15,13 +15,15 @@ import { RouterModule } from '@angular/router';
 import { AppRouterModule } from './app.router.module';
 import { APP_BASE_HREF, NgTemplateOutlet } from '@angular/common';
 import { PostsComponent } from './posts/posts.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostDialogComponent,
     ProfileComponent,
-    PostsComponent
+    PostsComponent,
+    AuthenticationComponent
   ],
   imports: [
     BrowserModule,

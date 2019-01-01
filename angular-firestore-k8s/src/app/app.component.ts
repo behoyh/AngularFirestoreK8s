@@ -18,6 +18,10 @@ export class AppComponent {
   {
     this.router.navigate(["/profile"]);
   }
+  public Authentication()
+  {
+    this.router.navigate(["/auth"]);
+  }
 
   private onError(error)
   {

@@ -1,0 +1,16 @@
+<h1>Log In!</h1>
+
+<h3>Log in</h3>
+<mat-form-field>
+  <input matInput placeholder="Email" [(ngModel)]="email" required>
+</mat-form-field>
+<mat-form-field>
+  <input matInput placeholder="Password" [(ngModel)]="password" required>
+</mat-form-field>
+
+<button mat-button (click)="Login()">Login</button>
+
+<h3>or Sign Up</h3>
+<mat-form-field>
+  <input matInput placeholder="Last name, First name" required>
+</mat-form-field>

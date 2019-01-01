@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
 
 const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: '', component: PostsComponent },
-  { path: 'posts', component: PostsComponent }
+  { path: 'posts', component: PostsComponent },
+  { path: 'auth', component: AuthenticationComponent }
 ];
 
 @NgModule({
