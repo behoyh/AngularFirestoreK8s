@@ -12,7 +12,7 @@ export interface AppStateModel {
     name: 'app',
     defaults:
     {
-        uid: '0',
+        uid: null,
         name: '',
         email: '',
         picture: ''
@@ -26,6 +26,11 @@ export class AppState {
     }
     @Selector()
     static getUserEmail(state: AppStateModel) {
+        return state.email;
+    }
+    @Selector()
+    static getUserUid(state:AppStateModel)
+    {
         return state.email;
     }
 

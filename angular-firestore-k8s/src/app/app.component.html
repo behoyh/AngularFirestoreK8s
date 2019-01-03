@@ -1,8 +1,15 @@
 <mat-toolbar>
-  <span><a mat-button (click)="Home()"><h1>Posts</h1></a></span>
+  <span><a mat-button (click)="Home()">
+      <h1>Posts</h1>
+    </a></span>
   <span class="spacer"></span>
-  <button mat-mini-fab color="accent" (click)="Profile()"><mat-icon>account_circle</mat-icon></button>
-  <button mat-button color="primary" (click)="Authentication()">Login/Register</button>
+  <div *ngIf="(user$ | async)?.uid != null">
+    <button mat-mini-fab color="accent" (click)="Profile()">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </div>
+    <button mat-button color="primary" (click)="Authentication()">Login/Register</button>
+  </div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

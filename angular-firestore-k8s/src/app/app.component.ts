@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router'
 import { Store, Select } from '@ngxs/store';
 import { Navigate } from './shared/app.actions';
+import { AppState } from './shared/app.state';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ import { Navigate } from './shared/app.actions';
 export class AppComponent {
   title = 'angular-firestore-k8s';
 
-  @Select() app$;
+  @Select(AppState) user$;
   @Select() router$;
 
   constructor(private store: Store, public router: Router) {
