@@ -43,6 +43,7 @@ constructor(private store: Store,private service:ProfileService, private snackBa
   }
 
   LoginGoogle() {
+    this.service.SignInGoogle()
       .then(x => this.OAuthUser(x));
   }
 
