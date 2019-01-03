@@ -6,9 +6,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule, MatIconModule, MatTabsModule, MatRippleModule, MatStepperModule} from '@angular/material';
-import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule, MatIconModule, MatTabsModule, MatRippleModule, MatStepperModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostDialogComponent } from './forms/post-dialog/post-dialog.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RouterModule } from '@angular/router';
@@ -16,6 +16,11 @@ import { AppRouterModule } from './app.router.module';
 import { APP_BASE_HREF, NgTemplateOutlet } from '@angular/common';
 import { PostsComponent } from './posts/posts.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { AppState } from './shared/app.state';
+import { RouterState } from './shared/router.state';
 
 @NgModule({
   declarations: [
@@ -29,10 +34,10 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase, 'blog-client'),
     AngularFirestoreModule,
-    AngularFireAuthModule, 
+    AngularFireAuthModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
-    MatButtonModule, 
+    MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
@@ -48,10 +53,16 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     MatTabsModule,
     MatRippleModule,
     MatStepperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxsModule.forRoot([
+      AppState,
+      RouterState
+    ]),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot()
   ],
   entryComponents: [PostDialogComponent],
-  exports: [MatButtonModule, MatCheckboxModule,MatFormFieldModule,MatInputModule,MatSnackBarModule,MatDialogModule,MatGridListModule,MatToolbarModule,MatCardModule,MatIconModule,MatTabsModule,MatRippleModule,MatStepperModule],
+  exports: [MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule, MatIconModule, MatTabsModule, MatRippleModule, MatStepperModule],
   providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
   bootstrap: [AppComponent]
 })

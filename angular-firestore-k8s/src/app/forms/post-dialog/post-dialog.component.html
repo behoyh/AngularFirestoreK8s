@@ -15,5 +15,6 @@
   </mat-form-field>
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    <button mat-button (click)="dialogRef.close();">Cancel</button>
   </div>
 </div>

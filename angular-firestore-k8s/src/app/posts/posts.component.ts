@@ -24,7 +24,6 @@ export class PostsComponent implements OnInit {
   public CreatePost(post:any)
   {
     var id = this.db.createId();
-
     var data = 
     {
       id:id,
@@ -44,7 +43,6 @@ export class PostsComponent implements OnInit {
   public EditPost(post:any)
   {
     var postsRef = this.db.collection("posts");
-
     var ref = postsRef.doc(post.id);
 
     ref.set({
@@ -59,7 +57,6 @@ export class PostsComponent implements OnInit {
   public DeletePost(id:string)
   {
     var postsRef = this.db.collection("posts");
-
     var ref = postsRef.doc(id);
 
     ref.delete()
@@ -97,5 +94,4 @@ export class PostsComponent implements OnInit {
   {
     alert(error);
   }
-
 }

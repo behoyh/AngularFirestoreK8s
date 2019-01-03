@@ -1,11 +1,11 @@
 <mat-tab-group>
   <mat-tab label="Info">
-    <div class="profile-picture mat-elevation-z1" matRipple><img [src]="profilePicture"></div>
+    <div class="profile-picture mat-elevation-z1" matRipple><img [src]="picture$ | async"></div>
     <mat-form-field>
       <input matInput placeholder="Username" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Primary Email" />
+      <input matInput placeholder="Primary Email"  [ngModel]="email$ | async"/>
     </mat-form-field>
   </mat-tab>
   <mat-tab label="Link Google Account">
@@ -14,9 +14,9 @@
         <form [formGroup]="GoogleAuthForm">
           <ng-template matStepLabel>Fill out your name</ng-template>
           <mat-form-field>
-            <input matInput placeholder="Last name, First name" formControlName="username" required>
+            <input matInput placeholder="Email" formControlName="email" required>
           </mat-form-field>
-          <button mat-button (click)="login()">Login</button>
+          <button mat-button (click)="LoginGoogle()">Login With Google</button>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -24,8 +24,7 @@
       </mat-step>
       <mat-step [stepControl]="GoogleAuthForm">
         <form [formGroup]="GoogleAuthForm">
-          <ng-template matStepLabel>Confirm Account</ng-template>
-          <h5>{{user | json}}</h5>
+          <ng-template matStepLabel>Set Password</ng-template>
           <mat-form-field>
             <input matInput placeholder="Password" formControlName="password" required>
           </mat-form-field>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'
+import { Store, Select } from '@ngxs/store';
+import { Navigate } from './shared/app.actions';
 
 @Component({
   selector: 'app-root',
@@ -10,21 +12,30 @@ import { Router } from '@angular/router'
 export class AppComponent {
   title = 'angular-firestore-k8s';
 
-  constructor(public router: Router)
-  {
+  @Select() app$;
+  @Select() router$;
+
+  constructor(private store: Store, public router: Router) {
   }
 
-  public Profile()
-  {
-    this.router.navigate(["/profile"]);
-  }
-  public Authentication()
-  {
-    this.router.navigate(["/auth"]);
+  public Home() {
+    this.store.dispatch([
+      new Navigate('/')
+    ]);
   }
 
-  private onError(error)
-  {
+  public Profile() {
+    this.store.dispatch([
+      new Navigate('/profile')
+    ]);
+  }
+  public Authentication() {
+    this.store.dispatch(
+      [new Navigate('/auth')]
+    );
+  }
+
+  private onError(error) {
     alert(error);
   }
 }

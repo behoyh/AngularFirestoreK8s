@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth} from 'firebase';
+import { auth } from 'firebase';
 import { ProfileService } from './profile.service';
 import { MatSnackBar } from '@angular/material';
+import { Select, Store } from '@ngxs/store';
+import { SetUser } from '../shared/app.actions';
+import { Navigate } from '../shared/app.actions';
+import { ProfileModel } from './profile.model';
+import { AppState } from '../shared/app.state';
+import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -12,42 +18,79 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user:auth.UserCredential = {credential:null,user:null};
-  profilePicture:string;
-  constructor(public profileService: ProfileService, public snackBar: MatSnackBar) {
+  @Select(AppState.getUserEmail) email$ : Observable<string>
+  @Select(AppState.getUserPicture) picture$: Observable<string>;
+  @Select() router$;
+
+  user: auth.UserCredential = { credential: null, user: null };
+
+  constructor(private store: Store, public profileService: ProfileService, public snackBar: MatSnackBar) {
+
   }
-  login() {
-    this.profileService.SignIn()
-      .then(x=>this.setUser(x));
+
+  LoginGoogle() {
+    this.profileService.SignInGoogle()
+      .then(x => this.OAuthUser(x));
   }
-                          
-  setUser(user: any): any {
+
+  //Mishmitewaka
+  OAuthUser(user: any): any {
     this.user = user;
-    this.profilePicture = user.additionalUserInfo.profile.picture
+
+    this.store.dispatch([
+      new SetUser(
+        {
+          uid: user.user.uid,
+          name: user.additionalUserInfo.name,
+          email: user.additionalUserInfo.profile.email,
+          picture: user.additionalUserInfo.profile.picture
+        }),
+      new Navigate('/')
+    ]);
+
+    this.snackBar.open("Added User.", "OKAY", { duration: 3000 })
   }
   logout() {
     this.profileService.SignOut();
     this.user = null;
+    this.store.dispatch([
+      new SetUser(null),
+      new Navigate('/')
+    ]);
   }
 
-  public StepChanged(event:any)
-  {
-    let user = this.user;
+  public StepChanged(event: any) {
 
-    if (user && user.user.uid && event.selectedIndex == 2)
-    {
-      this.profileService.CreateUser(user.additionalUserInfo,this.GoogleAuthForm.controls.confirmPassword.value)
-      .then(x=> this.snackBar.open("Added User!","OKAY", {duration:3000}))
-      .catch(x=>this.onError(x))
+    if (event.selectedIndex == 2) {
+      this.profileService.CreateUser(this.GoogleAuthForm.controls.email.value, this.GoogleAuthForm.controls.confirmPassword.value)
+        .then(x => this.UserLogin(x))
+        .catch(x => this.onError(x))
     }
+  }
 
+  public UserLogin(user: auth.UserCredential) {
+    user.user.updateProfile(
+      {
+        displayName: 'remoteUser.additionalUserInfo.profile.name',
+        photoURL: 'remoteUser.additionalUserInfo.profile.picture'
+      });
+    this.store.dispatch([
+      new SetUser(
+        {
+          uid: user.user.uid,
+          name: user.user.displayName,
+          email: user.user.email,
+          picture: user.user.photoURL
+        }),
+      new Navigate('/')
+    ]);
 
-    debugger;
+    this.snackBar.open("Added User.", "OKAY", { duration: 3000 })
   }
 
   GoogleAuthForm = new FormGroup(
     {
-      username: new FormControl,
+      email: new FormControl,
       password: new FormControl,
       confirmPassword: new FormControl
     });
@@ -55,8 +98,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
   }
 
-  private onError(error)
-  {
+  private onError(error) {
     alert(error);
   }
 

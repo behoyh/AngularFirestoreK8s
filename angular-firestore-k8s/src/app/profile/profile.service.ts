@@ -11,9 +11,9 @@ import * as sha from 'js-sha512';
 })
 export class ProfileService {
 
-  constructor(public db: AngularFirestore, public afAuth: AngularFireAuth) {
+  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
   }
-  public SignIn() {
+  public SignInGoogle() {
     return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider().setCustomParameters({
       prompt: 'select_account'
     }));
@@ -24,24 +24,10 @@ export class ProfileService {
   }
 
   public Login(email: string, password: string) {
-    return this.db.collection('users', x=>x.where("password", '==', password )
-    .where('email', '==', email)).snapshotChanges();
+    return this.afAuth.auth.signInAndRetrieveDataWithEmailAndPassword(email,password);
   }
 
-  public CreateUser(user: any, password: string) {
-    debugger;
-    var data: ProfileModel =
-    {
-      uid: user.profile.id,
-      name: user.profile.name,
-      email: user.profile.email,
-      picture: user.profile.picture,
-      password: sha.sha512(password)
-    };
-
-    var postsRef = this.db.collection("users");
-    return postsRef.doc(data.uid).set({
-      ...data
-    });
+  public CreateUser(email: string, password: string) {
+    return this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, sha.sha512(password));
   }
 }
