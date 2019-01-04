@@ -8,6 +8,7 @@
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>
+  <div *ngIf="(user$ | async)?.uid == null">
     <button mat-button color="primary" (click)="Authentication()">Login/Register</button>
   </div>
 </mat-toolbar>

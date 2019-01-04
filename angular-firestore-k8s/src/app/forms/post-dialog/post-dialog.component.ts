@@ -19,5 +19,4 @@ export class PostDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
