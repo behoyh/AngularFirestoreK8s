@@ -6,7 +6,6 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { PostDialogComponent } from '../forms/post-dialog/post-dialog.component';
 import { Select } from '@ngxs/store';
 import { AppState } from '../shared/app.state';
-import { get } from 'https';
 
 @Component({
   selector: 'app-posts',
