@@ -1,19 +1,26 @@
 <h1 mat-dialog-title>Post {{data.id}}</h1>
 <div mat-dialog-content>
-  <mat-form-field appearance="outline">
-    <mat-label>Name</mat-label>
-    <input [(ngModel)]="data.name" matInput placeholder="Placeholder">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Body</mat-label>
-    <input [(ngModel)]="data.body" matInput placeholder="Placeholder">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Date</mat-label>
-    <input [(ngModel)]="data.date" matInput placeholder="Placeholder">
-  </mat-form-field>
-  <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
-    <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <div class="container-fluid">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input [(ngModel)]="data.name" matInput placeholder="Placeholder">
+      </mat-form-field>
+    </div>
+    <div class="row">
+        <app-ngx-editor [minHeight]="100" [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="data.body"></app-ngx-editor>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input [(ngModel)]="data.date" matInput placeholder="Placeholder">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="data" color="accent" cdkFocusInitial>Save</button>
+        <button mat-button (click)="dialogRef.close()">Cancel</button>
+      </div>
+    </div>
   </div>
 </div>

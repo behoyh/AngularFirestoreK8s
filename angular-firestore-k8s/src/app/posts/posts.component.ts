@@ -4,6 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { PostDialogComponent } from '../forms/post-dialog/post-dialog.component';
+import { Select } from '@ngxs/store';
+import { AppState } from '../shared/app.state';
+import { get } from 'https';
 
 @Component({
   selector: 'app-posts',
@@ -11,14 +14,30 @@ import { PostDialogComponent } from '../forms/post-dialog/post-dialog.component'
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
+  admin = false;
+
   items: Observable<any[]>;
+
+  @Select(AppState) user$;
+
   constructor(public db: AngularFirestore, public router: Router, public dialog: MatDialog, public snackBar: MatSnackBar)
   {
     var postsRef = db.collection("posts");
     this.items = postsRef.valueChanges();
+
+    debugger;
+    this.user$.subscribe((user) =>
+    {
+      debugger;
+      db.collection('users').doc(user.uid).get().subscribe((doc) => {
+        debugger;
+        this.admin = doc.data().admin
+      });
+    });
   }
 
   ngOnInit() {
+
   }
 
   public CreatePost(post:any)
@@ -67,7 +86,8 @@ export class PostsComponent implements OnInit {
   public PostDialog(item:any={})
   {
     const dialogRef = this.dialog.open(PostDialogComponent, {
-      width: '320px',
+      width: '100%',
+      height:'100%',
       data: {
         id: item.id,
         body: item.body,
