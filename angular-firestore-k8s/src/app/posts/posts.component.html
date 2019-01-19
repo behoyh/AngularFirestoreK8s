@@ -1,18 +1,17 @@
 <div class="container">
   <br>
-<button mat-raised-button *ngIf="admin" (click)="PostDialog()">Create Post</button>
-<hr *ngIf="admin">
+  <button mat-raised-button *ngIf="admin" (click)="PostDialog()">Create Post</button>
+  <hr *ngIf="admin">
   <div class="row">
-    <div class="col-md-4" *ngFor="let item of items | async">
-      <div class="card">
+    <div class="col-md-4 pb-2" *ngFor="let item of items | async | orderBy:'date':reverse">
+      <div (click)="GetPost(item.id)" class="card pointer">
         <div class="card-body">
           <h5 class="card-title">{{item.name}}</h5>
-          {{item.body}}
-          <mat-card-footer><small>{{item.date}}</small></mat-card-footer>
+          <mat-card-footer><small>{{item.date | date}}</small></mat-card-footer>
           <div *ngIf="admin">
-          <button mat-button (click)="PostDialog(item)">edit</button>
-          <button mat-button (click)="DeletePost(item.id)">delete</button>
-        </div>
+            <button mat-button (click)="PostDialog(item)">edit</button>
+            <button mat-button (click)="DeletePost(item.id)">delete</button>
+          </div>
         </div>
       </div>
     </div>

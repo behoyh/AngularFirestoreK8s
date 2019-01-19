@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ProfileModel } from './profile.model';
 import * as sha from 'js-sha512';
 
 
@@ -29,5 +28,10 @@ export class ProfileService {
 
   public CreateUser(email: string, password: string) {
     return this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, sha.sha512(password));
+  }
+
+  public GetUser(id:string)
+  {
+    return this.db.collection('users').doc(id);
   }
 }

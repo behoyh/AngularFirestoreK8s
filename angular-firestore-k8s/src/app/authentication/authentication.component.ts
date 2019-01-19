@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService  } from '../profile/profile.service';
 import { Store, Select } from '@ngxs/store';
-import { SetUser, Navigate } from '../shared/app.actions';
+import { SetUser } from '../shared/app.actions';
 import { MatSnackBar } from '@angular/material';
+import { Navigate } from '@ngxs/router-plugin';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.css']
+  styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnInit {
   @Select() app$;
@@ -36,7 +37,7 @@ constructor(private store: Store,private service:ProfileService, private snackBa
           email: x.additionalUserInfo.profile.email,
           picture: x.additionalUserInfo.profile.picture
         }),
-        new Navigate('/')
+        new Navigate(['/'])
       ]);
 
       this.snackBar.open("Signed In " + this.app$.name,"OKAY", {duration:3000})
@@ -59,7 +60,7 @@ constructor(private store: Store,private service:ProfileService, private snackBa
           email: user.additionalUserInfo.profile.email,
           picture: user.additionalUserInfo.profile.picture
         }),
-      new Navigate('/')
+      new Navigate(['/'])
     ]);
 
     this.snackBar.open("Added User.", "OKAY", { duration: 3000 })

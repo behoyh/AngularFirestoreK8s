@@ -13,17 +13,19 @@ import { PostDialogComponent } from './forms/post-dialog/post-dialog.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RouterModule } from '@angular/router';
 import { AppRouterModule } from './app.router.module';
-import { APP_BASE_HREF, NgTemplateOutlet } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import { PostsComponent } from './posts/posts.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { AppState } from './shared/app.state';
-import { RouterState } from './shared/router.state';
-import { NgxEditorModule } from 'ngx-editor';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { HttpClientModule } from '@angular/common/http';
-
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { PostComponent } from './post/post.component';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     PostDialogComponent,
     ProfileComponent,
     PostsComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -52,19 +55,21 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatIconModule,
     AppRouterModule,
-    RouterModule,
+    RouterModule.forRoot([]),
     MatTabsModule,
     MatRippleModule,
     MatStepperModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([
-      AppState,
-      RouterState
+      AppState
     ]),
+    NgxsStoragePluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
-    NgxEditorModule,
-    HttpClientModule
+    NgxsRouterPluginModule.forRoot(),
+    AngularEditorModule,
+    HttpClientModule,
+    OrderModule
   ],
   entryComponents: [PostDialogComponent],
   exports: [MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule, MatIconModule, MatTabsModule, MatRippleModule, MatStepperModule],

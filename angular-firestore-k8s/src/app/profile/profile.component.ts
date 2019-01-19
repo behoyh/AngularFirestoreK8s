@@ -5,17 +5,16 @@ import { ProfileService } from './profile.service';
 import { MatSnackBar } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
 import { SetUser } from '../shared/app.actions';
-import { Navigate } from '../shared/app.actions';
-import { ProfileModel } from './profile.model';
 import { AppState } from '../shared/app.state';
 import { Observable } from 'rxjs';
+import { Navigate } from '@ngxs/router-plugin';
 
 
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   @Select(AppState.getUserEmail) email$ : Observable<string>
@@ -45,7 +44,7 @@ export class ProfileComponent implements OnInit {
           email: user.additionalUserInfo.profile.email,
           picture: user.additionalUserInfo.profile.picture
         }),
-      new Navigate('/')
+      new Navigate(['/'])
     ]);
 
     this.snackBar.open("Added User.", "OKAY", { duration: 3000 })
@@ -55,7 +54,7 @@ export class ProfileComponent implements OnInit {
     this.user = null;
     this.store.dispatch([
       new SetUser(null),
-      new Navigate('/')
+      new Navigate(['/'])
     ]);
   }
 
@@ -82,7 +81,7 @@ export class ProfileComponent implements OnInit {
           email: user.user.email,
           picture: user.user.photoURL
         }),
-      new Navigate('/')
+      new Navigate(['/'])
     ]);
 
     this.snackBar.open("Added User.", "OKAY", { duration: 3000 })

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'
 import { Store, Select } from '@ngxs/store';
-import { Navigate } from './shared/app.actions';
 import { AppState } from './shared/app.state';
+import { Navigate } from '@ngxs/router-plugin';
 
 @Component({
   selector: 'app-root',
@@ -21,18 +21,18 @@ export class AppComponent {
 
   public Home() {
     this.store.dispatch([
-      new Navigate('/')
+      new Navigate(['/'])
     ]);
   }
 
   public Profile() {
     this.store.dispatch([
-      new Navigate('/profile')
+      new Navigate(['/profile'])
     ]);
   }
   public Authentication() {
     this.store.dispatch(
-      [new Navigate('/auth')]
+      [new Navigate(['/auth'])]
     );
   }
 
