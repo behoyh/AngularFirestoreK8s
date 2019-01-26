@@ -62,7 +62,7 @@ import { OrderModule } from 'ngx-order-pipe';
     ReactiveFormsModule,
     NgxsModule.forRoot([
       AppState
-    ]),
+    ],{ developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),

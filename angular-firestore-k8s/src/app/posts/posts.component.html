@@ -2,9 +2,9 @@
   <br>
   <button mat-raised-button *ngIf="admin" (click)="PostDialog()">Create Post</button>
   <hr *ngIf="admin">
-  <div class="row">
-    <div class="col-md-4 pb-2" *ngFor="let item of items | async | orderBy:'date':reverse">
-      <div (click)="GetPost(item.id)" class="card pointer">
+  <div class="card-columns">
+    <div class="card" *ngFor="let item of items | async | orderBy:'date':true">
+      <div (click)="GetPost(item.id)" class="pointer">
         <div class="card-body">
           <h5 class="card-title">{{item.name}}</h5>
           <mat-card-footer><small>{{item.date | date}}</small></mat-card-footer>

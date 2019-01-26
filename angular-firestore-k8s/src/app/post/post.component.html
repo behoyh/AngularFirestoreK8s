@@ -1,5 +1,6 @@
 <div class="container">
     <h1>{{post.name}}</h1>
-    <h6>{{post.date}}</h6>
+    <h6>{{post.date | date}}</h6>
+    <hr>
     <div [innerHtml]="post.body"></div>
 </div>

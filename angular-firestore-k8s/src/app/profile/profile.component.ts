@@ -17,7 +17,7 @@ import { Navigate } from '@ngxs/router-plugin';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  @Select(AppState.getUserEmail) email$ : Observable<string>
+  @Select(AppState.getUserEmail) email$: Observable<string>
   @Select(AppState.getUserPicture) picture$: Observable<string>;
   @Select() router$;
 
@@ -34,26 +34,17 @@ export class ProfileComponent implements OnInit {
 
   //Mishmitewaka
   OAuthUser(user: any): any {
-    this.user = user;
-
-    this.store.dispatch([
-      new SetUser(
-        {
-          uid: user.user.uid,
-          name: user.additionalUserInfo.name,
-          email: user.additionalUserInfo.profile.email,
-          picture: user.additionalUserInfo.profile.picture
-        }),
-      new Navigate(['/'])
-    ]);
-
-    this.snackBar.open("Added User.", "OKAY", { duration: 3000 })
+    this.snackBar.open("Signed in " + user.displayName, "OKAY", { duration: 3000 })
   }
   logout() {
     this.profileService.SignOut();
-    this.user = null;
     this.store.dispatch([
-      new SetUser(null),
+      new SetUser({
+        uid: null,
+        name: '',
+        email: '',
+        picture: ''
+      }),
       new Navigate(['/'])
     ]);
   }
@@ -61,7 +52,7 @@ export class ProfileComponent implements OnInit {
   public StepChanged(event: any) {
 
     if (event.selectedIndex == 2) {
-      this.profileService.CreateUser(this.GoogleAuthForm.controls.email.value, this.GoogleAuthForm.controls.confirmPassword.value)
+      this.profileService.CreateUser("", this.GoogleAuthForm.controls.email.value, this.GoogleAuthForm.controls.confirmPassword.value)
         .then(x => this.UserLogin(x))
         .catch(x => this.onError(x))
     }

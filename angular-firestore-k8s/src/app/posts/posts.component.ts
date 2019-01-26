@@ -25,7 +25,9 @@ export class PostsComponent implements OnInit {
 
     this.user$.subscribe((user) => {
       userService.GetUser(user.uid).get().subscribe((doc) => {
-        this.admin = doc.data().admin
+        if (doc && doc.data() && doc.data().admin) {
+          this.admin = doc.data().admin
+        }
       });
     });
   }
@@ -42,7 +44,7 @@ export class PostsComponent implements OnInit {
 
   public CreatePost(post: any) {
     this.postService.CreatePost(post)
-      .then(x => this.snackBar.open("Success!", "OKAY", { duration: 3000 }))
+      .then(x => this.snackBar.open("Created Post!", "OKAY", { duration: 3000 }))
       .catch(x => this.onError(x));
   }
 
