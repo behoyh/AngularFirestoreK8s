@@ -25,25 +25,24 @@ export class AuthenticationComponent implements OnInit {
 
   public Login() {
     this.service.Login(this.LoginAuthForm.controls.email.value, this.LoginAuthForm.controls.password.value)
-    .then(x => this.SetProfile(x))
-    .catch(x => this.onError(x));
+      .then(x => this.SetProfile(x))
+      .catch(x => this.onError(x));
   }
   public Register() {
     this.service.CreateUser(this.RegisterAuthForm.controls.name.value, this.RegisterAuthForm.controls.email.value, this.RegisterAuthForm.controls.password.value)
-    .then(x => this.SetProfile(x))
-    .catch(x => this.onError(x));
+      .then(x => this.SetProfile(x))
+      .catch(x => this.onError(x));
   }
   private SetProfile(x: any): any {
-      this.store.dispatch([
-        new SetUser(
-          {
-            uid: x.user.uid,
-            name: x.user.displayName,
-            email: x.user.email,
-            picture: x.user.photoURL
-          }),
-        new Navigate(['/'])
-      ]);
+    this.store.dispatch([
+      new SetUser(
+        {
+          uid: x.user.uid,
+          name: x.user.displayName,
+          email: x.user.email,
+          picture: x.user.photoURL
+        })
+    ]);
     this.snackBar.open("Signed In " + this.app$.name, "OKAY", { duration: 3000 })
   }
 
@@ -53,7 +52,7 @@ export class AuthenticationComponent implements OnInit {
       .catch(x => this.onError(x));
   }
 
-  //Mishmitewaka
+  // Mishmitewaka
   OAuthUser(user: any): any {
     this.snackBar.open("Signed In " + user.displayName, "OKAY", { duration: 3000 })
   }

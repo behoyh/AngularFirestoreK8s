@@ -33,6 +33,11 @@ export class AppState {
     {
         return state.email;
     }
+    @Selector()
+    static getName(state:AppStateModel)
+    {
+        return state.name;
+    }
 
     @Action(SetUser)
     setUser({setState}:StateContext<AppStateModel>, {payload}: SetUser) {

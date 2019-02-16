@@ -2,21 +2,30 @@
   <mat-tab label="Info">
     <div class="profile-picture mat-elevation-z1" matRipple><img [src]="picture$ | async"></div>
     <mat-form-field>
-      <input matInput placeholder="Username" />
+      <input matInput placeholder="Username" [ngModel]="displayName$ | async" />
     </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Primary Email"  [ngModel]="email$ | async"/>
     </mat-form-field>
   </mat-tab>
-  <mat-tab label="Link Google Account">
+  <mat-tab label="Copy This Blog For Me!">
     <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="StepChanged($event)">
       <mat-step [stepControl]="GoogleAuthForm">
         <form [formGroup]="GoogleAuthForm">
-          <ng-template matStepLabel>Fill out your name</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Email" formControlName="email" required>
-          </mat-form-field>
-          <button mat-button (click)="LoginGoogle()">Login With Google</button>
+          <ng-template matStepLabel>Before we begin</ng-template>
+          <h3>Let's do this! Here is the game plan:</h3>
+          <ul>
+            <li>Authenticate with GitHub (GitLab coming soon). 
+                We will use this to fork the parent project on your behalf.</li>
+            <li>Put your Cloud Firestore info here so we can link it to your shiny new blog.</li>
+            <li>OPTIONAL: Decide if you'd like your site to be copied by others. 
+                We will need to configure a few more things if you decide to allow coping.</li>
+            <li>Setup your Docker Hub account so we can build your blog image.</li>
+            <li>Link your Azure AKS or Google Cloud GKS so we can issue the command to launch your new blog!</li>
+            <li>Let's Encrypt autmatically enables https on your new blog for security.</li>
+            <li>We will give you your IP address here. You can view your website using the IP.</li>
+            <li>OPTIONAL: Setup a domain account and get a domain name for your new website!</li>
+          </ul>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -24,14 +33,51 @@
       </mat-step>
       <mat-step [stepControl]="GoogleAuthForm">
         <form [formGroup]="GoogleAuthForm">
-          <ng-template matStepLabel>Set Password</ng-template>
-          <mat-form-field>
-            <input matInput placeholder="Password" formControlName="password" required>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Confirm Password" formControlName="confirmPassword" required></mat-form-field>
+          <ng-template matStepLabel>Login With GitHub</ng-template>
+          <p>The first step is to login with your prefered source control credentails. 
+            We will fork the parent repository for you.</p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Login With Github</h5>
+                  <p class="card-text">You will need a Github account.</p>
+                  <button (click)="LinkGitHub()" mat-button><i class="fab fa-github"> &nbsp;Sign In</i></button>
+                  <span class="badge badge-pill badge-success" *ngIf="GitHubLinked!=false">@{{GitHubUsername}}</span>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Login With GitLab</h5>
+                    <p class="card-text">Coming Soon!</p>
+                    <a href="#" class="btn btn-primary" disabled>Login With GitLab</a>
+                  </div>
+                </div>
           <div>
             <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="GoogleAuthForm">
+        <form [formGroup]="GoogleAuthForm">
+          <ng-template matStepLabel>Fork Parent Repo</ng-template>
+          <h3>Now we are going to clone you a copy</h3>
+          <h5>Parent Repo: {{parentRepo}}</h5>
+         <p>Click the button below to clone the parent repo into your GitHub account</p>
+         <p>You can also do this manually. The next button should light up below once this is completed.</p>
+         <button (click)="GitHubForkProject()" mat-button><i class="fas fa-clone"> &nbsp;Clone</i></button>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="GoogleAuthForm">
+        <form [formGroup]="GoogleAuthForm">
+          <ng-template matStepLabel>Link Docker Hub</ng-template>
+          <h3>Nice! Almost There.</h3>
+          <h5>Now we are going to link your new repository to Docker Hub.</h5>
+         <p>This will allow you to deploy your new app to Azure, Amazon, or even your own on-prem Kubernetes cluster!</p>
+         <button mat-button><i class="fab fa-docker"> &nbsp; Docker Hub</i></button>
+          <div>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>

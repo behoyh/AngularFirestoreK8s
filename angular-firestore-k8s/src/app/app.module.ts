@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireStorageModule,StorageBucket } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { PostComponent } from './post/post.component';
 import { OrderModule } from 'ngx-order-pipe';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { OrderModule } from 'ngx-order-pipe';
     NgxsRouterPluginModule.forRoot(),
     AngularEditorModule,
     HttpClientModule,
-    OrderModule
+    OrderModule,
+    HttpModule
   ],
   entryComponents: [PostDialogComponent],
   exports: [MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatDialogModule, MatGridListModule, MatToolbarModule, MatCardModule, MatIconModule, MatTabsModule, MatRippleModule, MatStepperModule],

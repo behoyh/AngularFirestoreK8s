@@ -13,10 +13,14 @@ export class PostDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PostDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  public uploadFile(){
+    
   }
 }

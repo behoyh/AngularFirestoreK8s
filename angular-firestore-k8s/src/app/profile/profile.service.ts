@@ -23,8 +23,7 @@ export class ProfileService {
               name: user.displayName,
               email: user.email,
               picture: user.photoURL
-            }),
-          new Navigate(['/'])
+            })
         ]);
       }
     });
