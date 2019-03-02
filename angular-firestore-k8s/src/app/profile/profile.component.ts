@@ -20,6 +20,8 @@ import { CopierService } from './copier.service';
 export class ProfileComponent implements OnInit {
   @Select(AppState.getUserEmail) email$: Observable<string>
   @Select(AppState.getUserPicture) picture$: Observable<string>;
+  displayName$:any='';
+  parentRepo = "Ur Mom";
   @Select() router$;
 
   user: auth.UserCredential = { credential: null, user: null };
