@@ -37,6 +37,6 @@ and on your pods with
 
 `kubectl get pods`
 
-Thant's it! Enjoy your new blog! 
+That's it! Enjoy your new blog! 
 
 
