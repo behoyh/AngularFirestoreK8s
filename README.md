@@ -62,6 +62,7 @@ That's it! Enjoy your new blog!
 - [ ] Deploy shiny new app to Kubernetes cluster, and make yaml file availiable for download.
 - [ ] Setup domain host
 - [ ] use Let's Encrpt API to secure site with SSL
+- [ ] [Helm](https://helm.sh/) Chart
 
 
 #### Miscellaneous
