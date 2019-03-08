@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: blog-app
 spec:
-  replicas: 7
+  replicas: 3
   selector:
     matchLabels:
       app: blog-app
@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
       - name: blog-app
-        image: behoyh/angular-firestore-kubernetes:0.1.2
+        image: behoyh/angular-firestore-kubernetes:0.1.1
         ports:
-        - containerPort: 443
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -27,18 +27,18 @@ metadata:
     service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
     service.beta.kubernetes.io/do-loadbalancer-algorithm: "round_robin"
     service.beta.kubernetes.io/do-loadbalancer-tls-ports: "443"
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "new-cert"
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "certificate-abc-123"
     service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
 spec:
   type: LoadBalancer
-  ports:
-  - protocol: TCP
-    port: 443
-    name: https
-    targetPort: 443
-  - protocol: TCP
-    port: 80
-    name: http
-    targetPort: 443
   selector:
     app: blog-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 80
