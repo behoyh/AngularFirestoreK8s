@@ -3,6 +3,8 @@
 
 Self-replicating blog I whipped up with Angular and Firebase. (Only GitHub clone works so far) The intent is to get this fully self-replicatable so that a user can clone, build a deploy this website to any Kubernetes cluster. Currently the issue is finding a Docker build agent and pushing to Docker Hub, but otherwise Digital Ocean and other cloud providers have the API's needed to deploy right from the client-side site. Example: [beshoyhanna.com](https://beshoyhanna.com)
 
+[![Run on Google Cloud](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/cloudrun/button&cloudshell_git_repo=https://github.com/behoyh/AngularFirestoreK8s.git)
+
 ### Prerequisites
 * Google Cloud Firestore account
 * Docker Hub (or another Docker registry)
