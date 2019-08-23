@@ -48,7 +48,7 @@ That's it! Enjoy your new blog!
 
 ### Deployment Option 2 
 
-Change the "Run in Google Cloud" button above to your public git repo and press it! [more info](https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud)
+Swap the link in the "Run in Google Cloud" button above to your public git repo and press it! [more info](https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud)
 
 ### Deployment Option 3 (for testing only)
 
