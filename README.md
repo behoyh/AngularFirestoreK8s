@@ -46,12 +46,13 @@ and on your pods with
 
 That's it! Enjoy your new blog! 
 
-### Deploying Option 2
+### Deploying Option 2 
+
+Change the "Run in Google Cloud" button above to your public git repo and press it! [more info](https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud)
+
+### Deploying Option 3 (for testing only)
 
 As of Angular CLI 8.3.0, run [ng deploy](https://angular.io/guide/deployment).
-
-### Deploying Option 3
-Change the "Run in Google Cloud" button above to your public git repo and press it! [more info](https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud)
 
 ## Project Status
 ---
