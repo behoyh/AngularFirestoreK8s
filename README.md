@@ -27,7 +27,7 @@ Self-replicating blog I whipped up with Angular and Firebase. (Only GitHub clone
 
 `docker push <registry>/<username>/<name>/latest`
 
-### Deploying Option 1
+### Deployment Option 1
 Now you are ready to deploy to your favroite Kubernetes cluster!
 
 Make sure you update afk-kube.yaml to point to your Docker registry.
@@ -46,11 +46,11 @@ and on your pods with
 
 That's it! Enjoy your new blog! 
 
-### Deploying Option 2 
+### Deployment Option 2 
 
 Change the "Run in Google Cloud" button above to your public git repo and press it! [more info](https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud)
 
-### Deploying Option 3 (for testing only)
+### Deployment Option 3 (for testing only)
 
 As of Angular CLI 8.3.0, run [ng deploy](https://angular.io/guide/deployment).
 
