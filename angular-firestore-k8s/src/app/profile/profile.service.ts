@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { getAuth, GoogleAuthProvider } from '@angular/fire/auth';
+import { signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Firestore, collectionData, collection, getDoc, doc } from '@angular/fire/firestore';
 import * as sha from 'js-sha512';
 import { Store } from '@ngxs/store';
 import { SetUser } from '../shared/app.actions';
-import { Navigate } from '@ngxs/router-plugin';
 
 
 @Injectable({
@@ -13,8 +12,9 @@ import { Navigate } from '@ngxs/router-plugin';
 })
 export class ProfileService {
 
-  constructor(private store: Store, private db: AngularFirestore, private afAuth: AngularFireAuth) {
-    afAuth.authState.subscribe(user => {
+  constructor(private store: Store, private db: Firestore) {
+    var afAuth = getAuth();
+    afAuth.onAuthStateChanged(user => {
       if (user) {
         this.store.dispatch([
           new SetUser(
@@ -30,24 +30,25 @@ export class ProfileService {
   }
 
   public SignInGoogle() {
-    return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider().setCustomParameters({
+    return signInWithPopup(getAuth(), new GoogleAuthProvider().setCustomParameters({
       prompt: 'select_account'
     }));
   }
 
   public SignOut() {
-    this.afAuth.auth.signOut();
+    getAuth().signOut();
   }
 
   public Login(email: string, password: string) {
-    return this.afAuth.auth.signInAndRetrieveDataWithEmailAndPassword(email, password);
+    return createUserWithEmailAndPassword(getAuth(), email, password);
   }
 
   public CreateUser(name: string, email: string, password: string) {
-    return this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(email, sha.sha512(password));
+    return createUserWithEmailAndPassword(getAuth(), email, sha.sha512(password));
   }
 
   public GetUser(id: string) {
-    return this.db.collection('users').doc(id);
+    var user = collection(this.db, 'users');
+    return getDoc(doc(user,id));
   }
 }

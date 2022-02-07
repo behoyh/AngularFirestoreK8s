@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Firestore, collection } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  constructor(public db: AngularFirestore)
+  constructor(public db: Firestore)
   {
   }
 
-  public GetPosts()
+  public async GetPosts()
   {
-    var postsRef = this.db.collection("posts");
-
-    return postsRef.valueChanges();
+    var postsRef = collection(this.db, "posts");
+    return postsRef;
   }
 }

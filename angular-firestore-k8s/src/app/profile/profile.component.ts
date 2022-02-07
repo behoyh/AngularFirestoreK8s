@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { auth } from 'firebase';
+import { UserCredential } from 'firebase/auth';
 import { ProfileService } from './profile.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Select, Store } from '@ngxs/store';
 import { SetUser } from '../shared/app.actions';
 import { AppState } from '../shared/app.state';
@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   parentRepo = "Ur Mom";
   @Select() router$;
 
-  user: auth.UserCredential = { credential: null, user: null };
+  user: UserCredential = { providerId: null, operationType:null, user: null };
   GitHubLinked = false;
   GitHubUsername = '';
   GitHubAuthToken = '';
@@ -64,12 +64,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  public UserLogin(user: auth.UserCredential) {
-    user.user.updateProfile(
-      {
-        displayName: 'remoteUser.additionalUserInfo.profile.name',
-        photoURL: 'remoteUser.additionalUserInfo.profile.picture'
-      });
+  public UserLogin(user: UserCredential) {
     this.store.dispatch([
       new SetUser(
         {
@@ -108,7 +103,6 @@ export class ProfileComponent implements OnInit {
       // ...
       if (result.additionalUserInfo.providerId == "github.com")
       {
-        debugger;
         this.GitHubLinked = true;
         this.GitHubUsername = result.additionalUserInfo.username;
         this.GitHubAuthToken = result.credential.accessToken

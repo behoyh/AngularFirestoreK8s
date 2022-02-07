@@ -7,7 +7,7 @@
       <div (click)="GetPost(item.id)" class="pointer">
         <div class="card-body">
           <h5 class="card-title">{{item.name}}</h5>
-          <mat-card-footer><small>{{item.date | date}}</small></mat-card-footer>
+          <small>{{item.date | date}}</small>
           <div *ngIf="admin">
             <button mat-button (click)="PostDialog(item)">edit</button>
             <button mat-button (click)="DeletePost(item.id)">delete</button>

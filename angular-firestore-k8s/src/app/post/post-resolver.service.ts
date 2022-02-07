@@ -16,9 +16,7 @@ export class PostResolverService implements Resolve<string> {
 
   public resolve(route: ActivatedRouteSnapshot): any {
     let id = route.paramMap.get('id');
-
-    this.postService.GetPost(id).get().pipe(
-      take(1),
+    this.postService.GetPost(id).then(()=>
       mergeMap(post => {
         if (post) {
           this.store.dispatch(new Navigate(['/posts/'+id]));

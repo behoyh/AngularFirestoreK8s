@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Firestore, collection, setDoc, doc, deleteDoc, collectionData, getDoc, DocumentData, DocumentSnapshot, updateDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,50 +8,44 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class PostService {
  
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: Firestore) { }
 
-  GetPost(id:string) {
-    return this.db.collection("posts").doc(id);
+  public GetPost(id:string) : Promise<DocumentSnapshot<DocumentData>> {
+    return getDoc(doc(collection(this.db, "posts"), id));
   }
 
-  public GetPosts()
+  public GetPosts() : Observable<any[]>
   {
-    return this.db.collection("posts");
+    return collectionData(collection(this.db, "posts"));
   }
 
   public CreatePost(post:any)
   {
-    var id = this.db.createId();
-    var data = 
-    {
-      id:id,
+    const newPost = doc(collection(this.db, "posts"));
+
+    var data = {
+      id: newPost.id,
       name: post.name,
       body: post.body,
       date: post.date
     };
 
-    return this.db.collection("posts").doc(id).set({
-      ...data
-    });
+    return setDoc(newPost, data);
   }
 
   public EditPost(post:any)
   {
-    var postsRef = this.db.collection("posts");
-    var ref = postsRef.doc(post.id);
-
-    return ref.set({
+     var data = {
       body: post.body,
       name: post.name,
       date: post.date
-    },{merge: true});
+    };
+
+    return updateDoc(doc(this.db, "posts", post.id), data);
   }
 
   public DeletePost(id:string)
   {
-    var postsRef = this.db.collection("posts");
-    var ref = postsRef.doc(id);
-
-    return ref.delete();
+    return deleteDoc(doc(this.db, "posts", id));
   }
 }

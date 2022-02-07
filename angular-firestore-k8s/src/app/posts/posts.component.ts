@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { PostDialogComponent } from '../forms/post-dialog/post-dialog.component';
 import { Select, Store } from '@ngxs/store';
 import { AppState } from '../shared/app.state';
@@ -21,12 +22,11 @@ export class PostsComponent implements OnInit {
   @Select(AppState) user$;
 
   constructor(private store: Store, private postService: PostService, userService: ProfileService, private dialog: MatDialog, private snackBar: MatSnackBar) {
-    this.items = postService.GetPosts().valueChanges();
-
+    this.items = postService.GetPosts();
     this.user$.subscribe((user) => {
-      userService.GetUser(user.uid).get().subscribe((doc) => {
+      userService.GetUser(user.uid).then((doc) => {
         if (doc && doc.data() && doc.data().admin) {
-          this.admin = doc.data().admin
+          this.admin = doc.data().admin;
         }
       });
     });

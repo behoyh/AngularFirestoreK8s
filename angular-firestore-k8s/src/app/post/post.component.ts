@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { PostService } from '../posts/post.service';
 import { Store, Select } from '@ngxs/store';
 import { AppState } from '../shared/app.state';
 import { RouterNavigation } from '@ngxs/router-plugin';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post',
@@ -16,7 +17,7 @@ export class PostComponent implements OnInit {
 
   @Select(AppState) user$;
 
-  constructor(private store: Store, private service: PostService, private router: ActivatedRoute) { }
+  constructor(private store: Store, private service: PostService, private router: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.router.params.subscribe(post =>
@@ -27,8 +28,9 @@ export class PostComponent implements OnInit {
   }
 
   LoadPost(post: string): any {
-    this.service.GetPost(post).get().subscribe((post) => {
+    this.service.GetPost(post).then((post) => {
       this.post = post.data();
+      this.post.body = this.sanitizer.bypassSecurityTrustHtml(this.post.body)
     });
   }
 

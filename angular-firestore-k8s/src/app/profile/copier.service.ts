@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
+import { Firestore } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
+import { signInWithPopup, GithubAuthProvider, fetchSignInMethodsForEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import {Http, RequestOptions, RequestOptionsArgs, Headers} from '@angular/http';
 
 @Injectable({
@@ -9,7 +9,7 @@ import {Http, RequestOptions, RequestOptionsArgs, Headers} from '@angular/http';
 })
 export class CopierService {
 
-  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth, private http:Http) {
+  constructor(private db: Firestore, private afAuth: Auth, private http:Http) {
 
   }
 
@@ -23,19 +23,19 @@ return this.http.post("https://api.github.com/repos/behoyh/AngularFirestoreK8s/f
 }
 
   public SignInGithub() {
-    var provider = new auth.GithubAuthProvider();
+    var provider = new GithubAuthProvider();
     provider.addScope('repo');
 
     provider.setCustomParameters({
       'allow_signup': 'true'
     });
 
-    return this.afAuth.auth.signInWithPopup(provider);
+    return signInWithPopup(this.afAuth, provider);
   }
 
   public LinkToAccount(email, password, pendingCred) {
     // Get sign-in methods for this email.
-    this.afAuth.auth.fetchSignInMethodsForEmail(email).then((methods) => {
+    fetchSignInMethodsForEmail(this.afAuth, email).then((methods) => {
       // Step 3.
       // If the user has several sign-in methods,
       // the first method in the list will be the "recommended" method to use.
@@ -43,7 +43,7 @@ return this.http.post("https://api.github.com/repos/behoyh/AngularFirestoreK8s/f
         // Asks the user his password.
         // In real scenario, you should handle this asynchronously.
         // TODO: Setup a extra feild with a password prompt to take in a password instead of hardcoded string.
-        this.afAuth.auth.signInWithEmailAndPassword(email, password).then((user:any) => {
+        signInWithEmailAndPassword(this.afAuth, email, password).then((user:any) => {
           // Step 4a.
           return user.link(pendingCred);
         }).then(function () {
